@@ -1,25 +1,19 @@
 package com.example.myspring;
 
-import com.example.myspring.Dao.UserDaoMySqlImpl;
-import com.example.myspring.Service.UserService;
-import com.example.myspring.Service.UserServiceImpl;
+import com.example.myspring.Model.Hello;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-@SpringBootTest
 class MyspringApplicationTests {
 
     @Test
-    void contextLoads() {
-    }
-
-    @Test
     public void test(){
-        UserServiceImpl service = new UserServiceImpl();
-        service.setUserDao( new UserDaoMySqlImpl() );
-        service.getUser();
-        //那我们现在又想用Oracle去实现呢
-//        service.setUserDao( new UserDaoOracleImpl() );
-//        service.getUser();
+        //解析beans.xml文件 , 生成管理相应的Bean对象
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        //getBean : 参数即为spring配置文件中bean的id .
+        Hello hello = (Hello) context.getBean("hello");
+        hello.show();
     }
 }
